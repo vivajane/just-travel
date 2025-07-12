@@ -9,6 +9,11 @@ import {Poppins } from "next/font/google";
 import { Comfortaa } from "next/font/google";
 import { Roboto } from "next/font/google";
 import Context from "./components/Context";
+import { usePathname } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 
 const comfortaa = Comfortaa({ subsets: ["latin"], weight: ["400", "700"] , variable : "--font-comfortaa"});
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700", "800"], variable: "--font-poppins" });
@@ -16,13 +21,16 @@ const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"], variable: "-
 
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+
   useEffect(() => {
     Aos.init({
     })
   },[])
-  useEffect(() => {
-    Aos.init();
-  }, []);
+
+  const hidePages = ["/login", "/signup"];
+  const hiddenPages = hidePages.includes(pathname);
+ 
 
   return (
     <html lang="en">
@@ -30,10 +38,11 @@ export default function RootLayout({ children }) {
         
       >
       <Context>
-        <Header/>
+        {!hiddenPages && <Header/>}
         {children}
-        <Footer/>
+        {!hiddenPages && <Footer/>}
       </Context>
+      <ToastContainer/>
       </body>
     </html>
   );

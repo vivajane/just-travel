@@ -30,7 +30,7 @@ const Header = () => {
           <Link className={`hover:bg-pink-400 hover: px-2 hover: rounded hover:py-1 hover:text-white {path.startsWith("/about") ? "active" : ""}` }href="/about">About Us</Link>
           <Link className={` hover:bg-pink-400 hover: px-2 hover: rounded hover:py-1 hover:text-white{path.startsWith("/contact") ? "active" : ""}`} href="/contact">Contact Us</Link>
           <Link className={` hover:bg-pink-400 hover: px-2 hover: rounded hover:py-1 hover:text-white{path.startsWith("/hotels") ? "active" : ""}`} href="/hotels">Hotels</Link>
-          <Link className={` hover:bg-pink-400 hover: px-2 hover: rounded hover:py-1 hover:text-white{path.startsWith("/activities") ? "active" : ""}`} href="/activities">Activities</Link>
+          <Link className={` hover:bg-pink-400 hover: px-2 hover: rounded hover:py-1 hover:text-white{path.startsWith("/activities") ? "active" : ""}`} href="/funactivities">Activities</Link>
           <Link className={` hover:bg-pink-400 hover: px-2 hover: rounded hover:py-1 hover:text-white{path.startsWith("/login") ? "active" : ""}`} href="/login">Login</Link>
         </nav>
 

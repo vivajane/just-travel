@@ -1,21 +1,51 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { ContextActivity } from "./Context";
+import Summary from "./Summary";
 const DetailActivity = ({ activity }) => {
   const [quantity, setQuantity] = useState(1);
+  const [show, setShow] = useState(false);
   const [formValues, setFormValues] = useState({
     date: "",
-    time: ""
+    time: "",
+  });
+  const [added, setAdded] = useState(() => {
+    const stored = localStorage.getItem("added");
+    return stored ? JSON.parse(stored) : [];
+  });
 
-  })
   const onChangeHandler = (e) => {
-    
     setFormValues((prev) => ({
-        ...prev,
-       [e.target.name]: e.target.value
-    }))
-    console.log(formValues)
-  }
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+    console.log(formValues);
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    const newData = {
+      id: `${activity.id} -${Date.now()}`,
+      date: formValues.date,
+      time: formValues.time,
+    };
+    const newActivity = { ...newData, ...activity, quantity };
+    setAdded((prev) => {
+      const updated = [...prev, newActivity];
+
+      return updated;
+    });
+    setShow(true);
+
+    setFormValues({
+      date: "",
+      time: "",
+    });
+  };
+  useEffect(() => {
+    localStorage.setItem("added", JSON.stringify(added));
+  }, [added]);
 
   const IncreaseCount = () => {
     if (quantity >= 0) {
@@ -32,19 +62,13 @@ const DetailActivity = ({ activity }) => {
     <div className="md:px-20 px-8 pb-10 pt-30 ">
       <div className="md:flex w-full gap-20 ">
         <div className="md:w-1/2">
-          {/* <Image
-            src= {activity.images[0] }
-            fill
-            alt={activity.name}
-            className="object-cover rounded-md"
-            /> */}
           <img
             src={activity.images[0]}
             className="object-cover w-ful h-full rounded-md"
             alt={activity.name}
           />
         </div>
-        <div className="md:w-1/2 space-y-3">
+        <div className="md:w-1/2 space-y-2">
           <h1 className="text-2xl pt-6 md:pt-0 font-bold">{activity.name}</h1>
           <p className="bg-pink-700 text-white p-2 py-2 inline-flex px-3 rounded-md">
             Opening hours : {activity.activeTime}
@@ -55,16 +79,17 @@ const DetailActivity = ({ activity }) => {
             Price:{" "}
             <span className="font-bold text-lg pl-2">₦{activity.price}</span>
           </h1>
+
           <div className="flex gap-3 items-center">
             <h1>Number of Tickets:</h1>
             <div className="flex gap-2 bg-pink-700 rounded-lg">
               <button
                 onClick={DecreaseCount}
-                className=" text-white cursor-pointer p-2 py-2 inline-flex px-3 rounded-md"
+                className=" text-white cursor-pointer p-2 inline-flex px-3 rounded-md"
               >
                 -
               </button>
-              <span className="p-2 py-2 inline-flex px-3 rounded-md">
+              <span className="p-2 inline-flex px-3 rounded-md">
                 {quantity}
               </span>
               <button
@@ -75,11 +100,12 @@ const DetailActivity = ({ activity }) => {
               </button>
             </div>
           </div>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <div className="">
               <label htmlFor="date">Date</label>
-              <input onChange={onChangeHandler}
-                className="p-2 py-2 mt-3 inline-flex border border-r-gray-400 focus:outline-pink-700 w-full rounded-md"
+              <input
+                onChange={onChangeHandler}
+                className="p-2 py-2 mt-2 inline-flex border border-r-gray-400 focus:outline-pink-700 w-full rounded-md"
                 type="date"
                 name="date"
                 id="date"
@@ -88,12 +114,50 @@ const DetailActivity = ({ activity }) => {
             </div>
             <div className="py-3">
               <label htmlFor="time">Time</label>
-             <input onChange={onChangeHandler} className="p-2 py-2 mt-2 inline-flex border border-r-gray-400 focus:outline-pink-700 w-full rounded-md" value={formValues.time} type="time" name="time" id="time" />
+              <input
+                onChange={onChangeHandler}
+                className="p-2 py-2 mt-2 inline-flex border border-r-gray-400 focus:outline-pink-700 w-full rounded-md"
+                value={formValues.time}
+                type="time"
+                name="time"
+                id="time"
+              />
             </div>
-            <button className="p-2 px-10 py-2 mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md">Submit</button>
           </form>
+          <div>
+            <div className="shadow-md shadow-pink-700 px-8 rounded-md py-6 space-y-2 ">
+              <h1>
+                VAT: <span>0%</span>
+              </h1>
+              <h1>
+                No of Tickets: <span>{quantity}</span>
+              </h1>
+              <h1 className="font-bold">
+                SubTotal: <span>₦{activity.price * quantity}</span>
+              </h1>
+
+              <button type="submit" onClick={onSubmitHandler} className="p-2 px-10 py-2 mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md">
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+
+      {show && (
+        <Summary
+          activity={activity}
+          quantity={quantity}
+          date={formValues.date}
+          time={formValues.time}
+          added={added}
+          setShow={setShow}
+          setAdded={setAdded}
+          setQuantity={setQuantity}
+          setFormValues={setFormValues}
+          formValues={formValues}
+        />
+      )}
     </div>
   );
 };

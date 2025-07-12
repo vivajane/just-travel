@@ -7,6 +7,7 @@ export const ContextActivity = createContext(null);
 const Context = (props) => {
   const [showActivity, setShowActivity] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   useEffect(() => {
     const showData = async () => {
       try {
