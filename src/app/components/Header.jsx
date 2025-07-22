@@ -1,6 +1,5 @@
 "use client";
 import React, { useContext, useState } from "react";
-import { Comfortaa } from "next/font/google";
 import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FaTimes } from "react-icons/fa";
