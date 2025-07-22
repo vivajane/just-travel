@@ -12,7 +12,7 @@ const Home = () => {
     <div className=''>
       <Hero/>
       <Reach/>
-      <FunParkedActivities/>
+      <FunParkedActivities />
       <Loyalty/>
       <Reviews/>
       <WhyChoose/>

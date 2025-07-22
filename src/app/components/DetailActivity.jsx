@@ -2,18 +2,17 @@
 import Image from "next/image";
 import { useContext, useState, useEffect } from "react";
 import { ContextActivity } from "./Context";
-import Summary from "./Summary";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 const DetailActivity = ({ activity }) => {
+  const router = useRouter()
+  const {isAuth, added, setAdded, loading} = useContext(ContextActivity)
   const [quantity, setQuantity] = useState(1);
-  const [show, setShow] = useState(false);
   const [formValues, setFormValues] = useState({
     date: "",
     time: "",
   });
-  const [added, setAdded] = useState(() => {
-    const stored = localStorage.getItem("added");
-    return stored ? JSON.parse(stored) : [];
-  });
+ 
 
   const onChangeHandler = (e) => {
     setFormValues((prev) => ({
@@ -25,6 +24,14 @@ const DetailActivity = ({ activity }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if(!formValues.date || !formValues.time){
+      toast.error("Please fill all the fields")
+      return;
+    }
+     if(!isAuth && !loading){
+      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`)
+      return;
+    }
     const newData = {
       id: `${activity.id} -${Date.now()}`,
       date: formValues.date,
@@ -36,7 +43,7 @@ const DetailActivity = ({ activity }) => {
 
       return updated;
     });
-    setShow(true);
+    router.push("/savedActivities")
 
     setFormValues({
       date: "",
@@ -108,6 +115,7 @@ const DetailActivity = ({ activity }) => {
                 className="p-2 py-2 mt-2 inline-flex border border-r-gray-400 focus:outline-pink-700 w-full rounded-md"
                 type="date"
                 name="date"
+                min={new Date().toISOString().split("T")[0]}
                 id="date"
                 value={formValues.date}
               />
@@ -144,7 +152,7 @@ const DetailActivity = ({ activity }) => {
         </div>
       </div>
 
-      {show && (
+      {/* {show && (
         <Summary
           activity={activity}
           quantity={quantity}
@@ -157,7 +165,7 @@ const DetailActivity = ({ activity }) => {
           setFormValues={setFormValues}
           formValues={formValues}
         />
-      )}
+      )} */}
     </div>
   );
 };

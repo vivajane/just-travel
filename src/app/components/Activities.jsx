@@ -10,8 +10,7 @@ const Activities = (props) => {
     <Link href={`/activity/${props.slug}`}>
       <div className="w-full max-w-sm mx-auto cursor-pointer text-center rounded-2xl px-6 py-8 hover:scale-105 duration-200 hover:shadow-xl shadow-md transition-all bg-white">
         <h1 className="text-lg font-bold mt-2">
-          {props.name}{" "}
-          <span className="text-pink-700">({props.duration})</span>
+          {props.name} <span className="text-pink-700">({props.duration})</span>
         </h1>
 
         <h1 className="text-lg font-bold my-4 py-2 inline-flex px-6 rounded-md bg-pink-700 text-white">

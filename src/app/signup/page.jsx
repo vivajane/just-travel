@@ -3,12 +3,11 @@ import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
 import SignUp from "../../../config/signup";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import Loading from "../components/Loading";
 
 const SignUpPage = () => {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     userName: "",
@@ -17,6 +16,9 @@ const SignUpPage = () => {
   });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
 
   const onChangeHandler = (e) => {
     setFormData((prev) => ({
@@ -60,6 +62,12 @@ const SignUpPage = () => {
         formData.password,
         formData.userName
       );
+      localStorage.setItem(
+        "item",
+        JSON.stringify({ email: formData.email, userName: formData.userName })
+      );
+      console.log("local storage :", {email: formData.email,
+        userName: formData.userName,})
 
       if (response) {
         toast.success("Account created successfully");
@@ -69,9 +77,10 @@ const SignUpPage = () => {
           password: "",
           confirmPassword: "",
         });
+
         setTimeout(() => {
           setMessage("");
-          router.push("/login");
+          router.push(redirect);
         }, 3000);
       } else {
         setMessage("Error creating account");
@@ -84,16 +93,21 @@ const SignUpPage = () => {
   };
   return (
     <div className="w-full">
-      {loading && <Loading/>}
-      <div className="p md:flex h-screen r w-full font-ibm">
+      {loading && <Loading />}
+      <div className="p md:flex h-scree r w-full font-ibm">
         <img
-          className="w-1/2 bg-gradient-to-t from-black via-purple-500 to-indigo-500 h-screen hidden md:block"
+          className="md:w-1/2 bg-gradient-to-t w-full from-black via-purple-500 to-indigo-500 h-screen hidden md:block"
+          src="https://images.pexels.com/photos/2389348/pexels-photo-2389348.jpeg"
+          alt=""
+        />
+        <img
+          className="md:hidden bg-gradient-to-t w-full from-black via-purple-500 to-indigo-500 h-96  "
           src="https://images.pexels.com/photos/2389348/pexels-photo-2389348.jpeg"
           alt=""
         />
         <form
           onSubmit={onSubmit}
-          className="w-80 md:w-1/2 shadow rounded-xl space-y-2 mx-auto p-8 "
+          className=" md:w-1/2 shadow rounded-xl space-y-2 mx-auto p-8 "
         >
           <h1 className="text-2xl font-bold text-center ">Create an account</h1>
 
@@ -151,14 +165,14 @@ const SignUpPage = () => {
             />
           </div>
           <div className="py-2">
-            <button className="bg-[#0360D9] text-white px-6 py-2 rounded-md">
+            <button className="bg-[#0360D9] cursor-pointer text-white px-6 py-2 rounded-md">
               Create account
             </button>
           </div>
           <p className="text-gray-500">
             Already have an account?{" "}
-            <span className="text-[#0360D9]">
-              <Link href="/login">Login</Link>
+            <span className="text-[#0360D9] cursor-pointer">
+              <Link href={`/login?redirect=${redirect}`}>Login</Link>
             </span>
           </p>
         </form>

@@ -51,7 +51,7 @@ const Footer = () => {
         </ul>
       </div>
     </div>
-    <div className="text-center">
+    <div className="md:text-center">
         <p className="md:text-sm text-xs">Copyright © 2025 FunVerge All Rights Reserved. v1.30.2</p>
     </div>
     </div>
