@@ -80,7 +80,7 @@ const SignUpWrapper = () => {
 
         setTimeout(() => {
           setMessage("");
-          router.push(redirect);
+          router.push(`/login?redirect=${redirect}`);
         }, 3000);
       } else {
         setMessage("Error creating account");
