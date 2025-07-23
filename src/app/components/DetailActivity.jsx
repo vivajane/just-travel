@@ -1,18 +1,16 @@
 "use client";
-import Image from "next/image";
 import { useContext, useState, useEffect } from "react";
 import { ContextActivity } from "./Context";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 const DetailActivity = ({ activity }) => {
-  const router = useRouter()
-  const {isAuth, added, setAdded, loading} = useContext(ContextActivity)
+  const router = useRouter();
+  const { isAuth, added, setAdded, loading } = useContext(ContextActivity);
   const [quantity, setQuantity] = useState(1);
   const [formValues, setFormValues] = useState({
     date: "",
     time: "",
   });
- 
 
   const onChangeHandler = (e) => {
     setFormValues((prev) => ({
@@ -24,12 +22,14 @@ const DetailActivity = ({ activity }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if(!formValues.date || !formValues.time){
-      toast.error("Please fill all the fields")
+    if (!formValues.date || !formValues.time) {
+      toast.error("Please fill all the fields");
       return;
     }
-     if(!isAuth && !loading){
-      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`)
+    if (!isAuth && !loading) {
+      router.push(
+        `/login?redirect=${encodeURIComponent(window.location.pathname)}`
+      );
       return;
     }
     const newData = {
@@ -43,7 +43,7 @@ const DetailActivity = ({ activity }) => {
 
       return updated;
     });
-    router.push("/savedActivities")
+    router.push("/savedActivities");
 
     setFormValues({
       date: "",
@@ -144,7 +144,11 @@ const DetailActivity = ({ activity }) => {
                 SubTotal: <span>₦{activity.price * quantity}</span>
               </h1>
 
-              <button type="submit" onClick={onSubmitHandler} className="p-2 px-10 py-2 mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md">
+              <button
+                type="submit"
+                onClick={onSubmitHandler}
+                className="p-2 px-10 py-2 mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md"
+              >
                 Submit
               </button>
             </div>

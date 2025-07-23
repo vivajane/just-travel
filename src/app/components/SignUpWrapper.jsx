@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 import Loading from "../components/Loading";
 
-const SignUpPage = () => {
+const SignUpWrapper = () => {
   const [formData, setFormData] = useState({
     email: "",
     userName: "",
@@ -80,7 +80,7 @@ const SignUpPage = () => {
 
         setTimeout(() => {
           setMessage("");
-          router.push(`/login?redirect=${redirect}`);
+          router.push(redirect);
         }, 3000);
       } else {
         setMessage("Error creating account");
@@ -181,4 +181,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default SignUpWrapper;
