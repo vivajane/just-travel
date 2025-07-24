@@ -87,6 +87,9 @@ const SignUpWrapper = () => {
       }
     } catch (error) {
       console.log(error, "error from signup page");
+      if(error.code === "auth/email-already-in-use" || error.message.includes("EMAIL_EXISTS")){
+        toast.error("Email already in use");
+      }
     } finally {
       setLoading(false);
     }
