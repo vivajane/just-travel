@@ -11,7 +11,7 @@ export async function POST(request) {
       {
         email,
         amount ,
-        callback_url : 'http://localhost:3000/'
+        callback_url : 'https://fun-verge.vercel.app/'
       },
       {
         headers: {
