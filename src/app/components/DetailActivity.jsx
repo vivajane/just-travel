@@ -71,17 +71,17 @@ const DetailActivity = ({ activity }) => {
         <div className="md:w-1/2">
           <img
             src={activity.images[0]}
-            className="object-cover w-full max-h-[400px] sm:max-h-[500px] md:max-h-[700px]  rounded-md"
+            className="object-cover w-full max-h-[400px] sm:max-h-[600px] md:max-h-[500px]  rounded-md"
             alt={activity.name}
           />
         </div>
         <div className="md:w-1/2 flex gap-7 ">
           <div className=" space-y-2">
-            <h1 className="text-2xl pt-6 md:pt-0 font-bold">{activity.name}</h1>
-            <p className="bg-pink-700 text-white p-2 py-2 inline-flex px-3 rounded-md">
-              Opening hours : {activity.activeTime}
+            <h1 className="lg:text-2xl md:text-lg pt-6 md:pt-0 font-bold">{activity.name}</h1>
+            <p className="bg-pink-700 text-white lg:text-lg md:text-sm text-sm p-2 py-2 inline-flex px-3 rounded-md">
+              Opening hoursrr : {activity.activeTime}
             </p>
-            <p>{activity.description}</p>
+            <p className="text-sm">{activity.description}</p>
             <h1>
               {" "}
               Price:{" "}
@@ -136,62 +136,47 @@ const DetailActivity = ({ activity }) => {
           </div>
 
           <div className="sm:block hidden py-6">
-            <div className="shadow-md  shadow-pink-700 sm:h-[250px] md:h-[200px] px-8 rounded-md py-6 space-y-2 ">
-            <h1>
-              VAT: <span>0%</span>
-            </h1>
-            <h1>
-              No of Tickets: <span>{quantity}</span>
-            </h1>
-            <h1 className="font-bold">
-              SubTotal: <span>₦{activity.price * quantity}</span>
-            </h1>
+            <div className="shadow-md  shadow-pink-700 sm:h-[250px] md:h-[200px]  lg:px-8 px-6  rounded-md py-6 text-sm space-y-2 ">
+              <h1>
+                VAT: <span>0%</span>
+              </h1>
+              <h1 className="text-sm">
+                No of Tickets: <span>{quantity}</span>
+              </h1>
+              <h1 className="font-bold text-sm">
+                SubTotal: <span>₦{activity.price * quantity}</span>
+              </h1>
 
-            <button
-              type="submit"
-              onClick={onSubmitHandler}
-              className="p-2 px-10 py-2 mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md"
-            >
-              Submit
-            </button>
-          </div>
+              <button
+                type="submit"
+                onClick={onSubmitHandler}
+                className="p-2 px-10 py-2 cursor-pointer mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
         <div className="shadow-md mt-3 sm:hidden block shadow-pink-700 max-h-[300px] max-w-44 px-6 rounded-md py-6 space-y-2 ">
-            <h1>
-              VAT: <span>0%</span>
-            </h1>
-            <h1>
-              No of Tickets: <span>{quantity}</span>
-            </h1>
-            <h1 className="font-bold">
-              SubTotal: <span>₦{activity.price * quantity}</span>
-            </h1>
+          <h1>
+            VAT: <span>30%</span>
+          </h1>
+          <h1>
+            No of Tickets: <span>{quantity}</span>
+          </h1>
+          <h1 className="font-bold">
+            SubTotal: <span>₦{activity.price * quantity}</span>
+          </h1>
 
-            <button
-              type="submit"
-              onClick={onSubmitHandler}
-              className="p-2 px-10 py-2 mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md"
-            >
-              Submit
-            </button>
-          </div>
+          <button
+            type="submit"
+            onClick={onSubmitHandler}
+            className="p-2 px-10 py-2 cursor-pointer mt-3 inline-flex border focus:outline-pink-700 bg-gray-500 hover:bg-pink-700 text-white rounded-md"
+          >
+            Submit
+          </button>
+        </div>
       </div>
-
-      {/* {show && (
-        <Summary
-          activity={activity}
-          quantity={quantity}
-          date={formValues.date}
-          time={formValues.time}
-          added={added}
-          setShow={setShow}
-          setAdded={setAdded}
-          setQuantity={setQuantity}
-          setFormValues={setFormValues}
-          formValues={formValues}
-        />
-      )} */}
     </div>
   );
 };
